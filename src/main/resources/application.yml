@@ -1,0 +1,8 @@
+# H2 configuration
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console # url path to access h2 db
+  datasource:
+    generate-unique-name: false # using jdbc url as 'jdbc:h2:mem:testdb'
