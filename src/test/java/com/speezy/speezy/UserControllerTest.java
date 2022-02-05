@@ -1,5 +1,6 @@
 package com.speezy.speezy;
 
+import com.speezy.speezy.shared.GenericResponse;
 import com.speezy.speezy.user.User;
 import com.speezy.speezy.user.UserRepository;
 import org.junit.Before;
@@ -35,9 +36,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserIsValid_receivedOk() {
         User user = getValidUser();
-
         ResponseEntity<Object> response = testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
-
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
@@ -47,6 +46,14 @@ public class UserControllerTest {
 
         testRestTemplate.postForEntity(API_1_0_USERS, user, Object.class);
         assertThat(userRepository.count()).isEqualTo(1);
+    }
+
+    @Test
+    public void postUser_whenUserIsValid_receivedSuccessMessage() {
+        User user = getValidUser();
+        ResponseEntity<GenericResponse> response =
+                testRestTemplate.postForEntity(API_1_0_USERS, user, GenericResponse.class);
+        assertThat(response.getBody().getMessage()).isNotNull();
     }
 
     private User getValidUser() {
